@@ -2,24 +2,17 @@
 
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.colors import ListedColormap
 
-#Created by MOHAMMAD RASEL
-#Copyright! @2022 All rights reserved.
+board = np.tile([1, 0], (8, 4))
 
-import PyPDF2
-import pyttsx3
+for i in range(board.shape[0]):
+    board[i] = np.roll(board[i], i % 2)
 
-book = open('oop.pdf', 'rb')
-full_text = ""
-pdfReader = PyPDF2.PdfFileReader(book)
-pages = pdfReader.numPages
-print(pages)
-var = pyttsx3.init()
-var.setProperty('rate', 170 )
-for num in range(6, pages):
-    page = pdfReader.getPage(num)
-    text = page.extractText()
-    var.say(text)
-    full_text += text
-    var.save_to_file(full_text, "audio.mp3")
-    var.runAndWait()
+cmap = ListedColormap(['#000080', '#EEE8AA'])
+plt.matshow(board, cmap=cmap)
+plt.xticks([])
+plt.yticks([])
+plt.show()
